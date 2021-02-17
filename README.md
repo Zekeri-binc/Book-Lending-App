@@ -35,11 +35,78 @@ USER STORY
 TO REGISTER A BOOK
     Select Register book on the form
     input Author name, Book name, isbn, quantity
-    Get the values using document.getElementById respectively and assign to the variables
+    Get the values and assign to the variables
+    
     create an object to contain all input as property
+
             function Book(authorName, bookName, isbn) {  
-            this.authorName = authorName
-            this.bookName = bookName
-            this.isbn = isbn
-            this.quantity = quantity
+                this.authorName = authorName
+                this.bookName = bookName
+                this.isbn = isbn
+                this.quantity = quantity
             }
+
+
+    check if value of any propety is empty
+        flag an error
+    else call the saveToLocalStorage function and pass the object as parameter
+        In saveToLocalStorage function which takes two parameter - book object and the local storage key
+        Set a variable enterBook = []
+    Check if there is no item in Local storage for parameter "local storage key"
+        push the book object to the enterBook array
+    else assign the local storage array to the enterBook array.
+        ensure to convert this to object from string using JSON.parse
+        push the book object into the enterBook array
+        call the Save to Local storage method
+
+
+TO BORROW A BOOK
+    select Borrow a book
+    This call the displayCard function that adds two fields to the UI; Select Book Title to borrow and enter User Registration ID
+    All book Title are prepopulated in the select dropdown
+    call The prepopulate function;
+
+    Check if library books are stored in Local storage
+        Get The books, asign to an array and map the option field of the select element, then assign to the id.INNERHTML of the select book element
+        Instatiat a new Book Obj from the previous book Object
+        Set the quantity to 1 because users are oly allowed to borrow 1 book of same type
+        borrowBookObj.quantity = 1
+        the userRegistraionId to the new object
+        borrowBookObj.userRegistraionId = get this using getElementById
+    On Select of book title to borrow,
+        Fetch the book data from Local storage and populate the form fields which have been disable / made read only
+        Enter the registration id of user borrowing the book
+        
+
+    On Submit of Form
+    Call the Update local storage function and pass the bookObj and newBookObj parameter
+
+
+    Check if user borrowed that book, if Yes
+        throw an error, You have already borrowed this book
+    else, Get the library book in Local storage
+        Find the index of the bookObj in the library book
+        Update the quanty by subtracting 1
+        save the book object to local storage
+        save the borrowed book object to local storage
+
+
+To Return a book
+
+On Select of book title to return,
+Fetch the book data from Local storage and populate the form fields
+enter registration id of user returning the book
+
+On Submit of Form
+get the borrowed book array from local storage
+
+Check if user borrowed that book by filtering borrowed books array were borrowBookObj isbn = isbn in borrowerd  book array and borrowBookObj registration id = registration id in borrowd book array and quantity in borrowed book array = 1
+    if no value is returned throw an error - "No match for borrowed book"
+    else  
+        Call the Update local storage function and pass the bookObj and newBookObj parameter
+        Get the library book in Local storage
+        Find the index of the bookObj in the library book
+        Update the quanty by adding 1
+        update the quantity in borrowed book array by subracting 1
+        save the book object to local storage
+        save the borrowed book object to local storage
